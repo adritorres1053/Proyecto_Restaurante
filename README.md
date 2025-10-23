@@ -1,2 +1,2 @@
-# Proyecto_Restaurante
+# Proyecto Restaurante
 Sistema para Restaurantes
