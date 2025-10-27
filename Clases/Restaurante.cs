@@ -1,6 +1,7 @@
 ﻿namespace Proyecto_Restaurante;
 
 using Listas;
+using System;
 
 public class Restaurante
 {
@@ -29,6 +30,7 @@ public class Restaurante
         colaPedidos = new Cola<Pedido>();
         historialPedidos = new Pila<Pedido>();
     }
+
     public string Nit
     {
         get { return this.nit; }
@@ -78,9 +80,7 @@ public class Restaurante
         get { return this.historialPedidos; }
     }
 
-    
     // Métodos funcionales del restaurante
-    
     public void MostrarInformacion()
     {
         Console.WriteLine("RESTAURANTE");
@@ -92,55 +92,66 @@ public class Restaurante
         Console.WriteLine("----------------------------------");
     }
 
-    // Agregar cliente
+    //  Agregar cliente 
     public void AgregarCliente(Cliente cliente)
     {
-        if (clientes.Buscar(c => c.Cedula == cliente.Cedula) != null)
+        Nodo<Cliente>? actual = clientes.Cabeza;
+
+        while (actual != null)
         {
-            Console.WriteLine("Ya existe un cliente con esa cédula.");
-            return;
+            if (actual.Valor.Cedula == cliente.Cedula)
+            {
+                Console.WriteLine("Ya existe un cliente con esa cédula.");
+                return;
+            }
+            actual = actual.Siguiente;
         }
 
         clientes.Agregar(cliente);
         Console.WriteLine("Cliente agregado correctamente.");
     }
 
-    //  Agregar plato al menú
+    // Agregar plato al menú 
     public void AgregarPlato(Plato plato)
     {
-        if (platos.Buscar(p => p.Codigo == plato.Codigo) != null)
+        Nodo<Plato>? actual = platos.Cabeza;
+
+        while (actual != null)
         {
-            Console.WriteLine("Ya existe un plato con ese código.");
-            return;
+            if (actual.Valor.Codigo == plato.Codigo)
+            {
+                Console.WriteLine("Ya existe un plato con ese código.");
+                return;
+            }
+            actual = actual.Siguiente;
         }
 
         platos.Agregar(plato);
-        Console.WriteLine(" Plato agregado correctamente al menú.");
+        Console.WriteLine("Plato agregado correctamente al menú.");
     }
 
-    //  Crear pedido
+    // Crear pedido
     public void CrearPedido(Pedido pedido)
     {
         colaPedidos.Agregar(pedido);
-        Console.WriteLine(" Pedido agregado a la cola de pedidos pendientes.");
+        Console.WriteLine("Pedido agregado a la cola de pedidos pendientes.");
     }
 
-    //  Despachar pedido 
+    // Despachar pedido
     public void DespacharPedido()
     {
         if (colaPedidos.EstaVacia())
         {
-            Console.WriteLine(" No hay pedidos pendientes para despachar.");
+            Console.WriteLine("No hay pedidos pendientes para despachar.");
             return;
         }
 
         Pedido pedido = colaPedidos.Primero();
         colaPedidos.Eliminar();
         pedido.Estado = "DESPACHADO";
-
         historialPedidos.AgregarElemento(pedido);
 
-        Console.WriteLine("🚚 Pedido #" + pedido.IdPedido + " despachado correctamente.");
+        Console.WriteLine(" Pedido #" + pedido.IdPedido + " despachado correctamente.");
     }
 
     // Mostrar clientes
@@ -148,7 +159,7 @@ public class Restaurante
     {
         if (clientes.Cabeza == null)
         {
-            Console.WriteLine(" No hay clientes registrados.");
+            Console.WriteLine("No hay clientes registrados.");
             return;
         }
 
@@ -165,7 +176,7 @@ public class Restaurante
     {
         if (platos.Cabeza == null)
         {
-            Console.WriteLine(" No hay platos registrados en el menú.");
+            Console.WriteLine("No hay platos registrados en el menú.");
             return;
         }
 
@@ -177,7 +188,7 @@ public class Restaurante
         }
     }
 
-    //  Mostrar pedidos pendientes
+    // Mostrar pedidos pendientes
     public void MostrarPedidosPendientes()
     {
         if (colaPedidos.EstaVacia())
@@ -186,15 +197,14 @@ public class Restaurante
             return;
         }
 
-        Console.WriteLine(" Pedidos pendientes:");
+        Console.WriteLine("Pedidos pendientes:");
         colaPedidos.Imprimir();
     }
 
-    // Mostrar historial de pedidos (últimos despachados)
+    // Mostrar historial de pedidos
     public void MostrarHistorial()
     {
-        Console.WriteLine("📦 Últimos pedidos despachados:");
+        Console.WriteLine("Últimos pedidos despachados:");
         historialPedidos.ImprimirPila();
     }
 }
-

@@ -1,6 +1,7 @@
 ﻿namespace Proyecto_Restaurante;
 
 using Listas; 
+using System; 
 
 public class Pedido
 {

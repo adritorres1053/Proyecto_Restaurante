@@ -1,4 +1,4 @@
-﻿using System; // opcional, si usas Console.WriteLine
+﻿using System; 
 
 namespace Listas;
 

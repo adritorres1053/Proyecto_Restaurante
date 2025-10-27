@@ -12,7 +12,7 @@ class Program
         {
             Console.Clear();
             Console.WriteLine("=========================================");
-            Console.WriteLine("     🍽️ SISTEMA DE GESTIÓN RESTAURANTE     ");
+            Console.WriteLine("     SISTEMA DE GESTIÓN RESTAURANTE     ");
             Console.WriteLine("=========================================");
             Console.WriteLine("1. Crear restaurante");
             Console.WriteLine("2. Agregar cliente");
@@ -27,7 +27,7 @@ class Program
 
             if (!int.TryParse(Console.ReadLine(), out opcion))
             {
-                Console.WriteLine("⚠️ Opción inválida. Presione una tecla para continuar...");
+                Console.WriteLine("Opción inválida. Presione una tecla para continuar...");
                 Console.ReadKey();
                 continue;
             }
@@ -76,11 +76,11 @@ class Program
                     break;
 
                 case 9:
-                    Console.WriteLine("👋 Saliendo del sistema. ¡Hasta pronto!");
+                    Console.WriteLine("Saliendo del sistema. ¡Hasta pronto!");
                     break;
 
                 default:
-                    Console.WriteLine("⚠️ Opción no válida.");
+                    Console.WriteLine(" Opción no válida.");
                     break;
             }
 
@@ -90,13 +90,12 @@ class Program
         } while (opcion != 9);
     }
 
-    // -----------------------------------------------
     // MÉTODOS AUXILIARES DEL MENÚ
-    // -----------------------------------------------
+    
 
     static Restaurante CrearRestaurante()
     {
-        Console.WriteLine("🏢 CREAR RESTAURANTE");
+        Console.WriteLine("CREAR RESTAURANTE");
         Console.Write("NIT: ");
         string nit = Console.ReadLine();
 
@@ -113,13 +112,13 @@ class Program
         string direccion = Console.ReadLine();
 
         Restaurante nuevo = new Restaurante(nit, nombre, dueno, celular, direccion);
-        Console.WriteLine("✅ Restaurante creado correctamente.");
+        Console.WriteLine("Restaurante creado correctamente.");
         return nuevo;
     }
 
     static void AgregarCliente(Restaurante restaurante)
     {
-        Console.WriteLine("👤 AGREGAR CLIENTE");
+        Console.WriteLine(" AGREGAR CLIENTE");
         Console.Write("Cédula: ");
         string cedula = Console.ReadLine();
 
@@ -141,7 +140,7 @@ class Program
 
     static void AgregarPlato(Restaurante restaurante)
     {
-        Console.WriteLine("🍽️ AGREGAR PLATO AL MENÚ");
+        Console.WriteLine("AGREGAR PLATO AL MENÚ");
         Console.Write("Código del plato: ");
         string codigo = Console.ReadLine();
 
@@ -152,8 +151,7 @@ class Program
         string descripcion = Console.ReadLine();
 
         Console.Write("Precio: ");
-        decimal precio;
-        decimal.TryParse(Console.ReadLine(), out precio);
+        decimal.TryParse(Console.ReadLine(), out decimal precio);
 
         Plato nuevo = new Plato(codigo, nombre, descripcion, precio);
         restaurante.AgregarPlato(nuevo);
@@ -161,7 +159,7 @@ class Program
 
     static void CrearPedido(Restaurante restaurante)
     {
-        Console.WriteLine("🧾 CREAR PEDIDO");
+        Console.WriteLine("CREAR PEDIDO");
         Console.Write("Ingrese la cédula del cliente: ");
         string cedula = Console.ReadLine();
 
@@ -173,17 +171,30 @@ class Program
             Console.Write("Código del plato: ");
             string codigo = Console.ReadLine();
 
-            Plato plato = restaurante.Platos.Buscar(p => p.Codigo == codigo);
-            if (plato == null)
+            // 🔹 Reemplazo del método Buscar
+            Plato platoEncontrado = null;
+            Nodo<Plato> nodoPlato = restaurante.Platos.Cabeza;
+
+            while (nodoPlato != null)
             {
-                Console.WriteLine("⚠️ El plato no existe.");
+                if (nodoPlato.Valor.Codigo == codigo)
+                {
+                    platoEncontrado = nodoPlato.Valor;
+                    break;
+                }
+                nodoPlato = nodoPlato.Siguiente;
+            }
+
+            if (platoEncontrado == null)
+            {
+                Console.WriteLine(" El plato no existe.");
             }
             else
             {
                 Console.Write("Cantidad: ");
                 int cantidad = int.Parse(Console.ReadLine());
 
-                PlatoPedido detalle = new PlatoPedido(plato.Codigo, cantidad, plato.Precio);
+                PlatoPedido detalle = new PlatoPedido(platoEncontrado.Codigo, cantidad, platoEncontrado.Precio);
                 nuevoPedido.AgregarPlato(detalle);
             }
 
@@ -200,10 +211,9 @@ class Program
     {
         if (restaurante == null)
         {
-            Console.WriteLine("⚠️ Primero debe crear un restaurante.");
+            Console.WriteLine("Primero debe crear un restaurante.");
             return false;
         }
         return true;
     }
 }
-

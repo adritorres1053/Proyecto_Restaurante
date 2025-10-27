@@ -1,4 +1,7 @@
 ﻿namespace Proyecto_Restaurante;
+ 
+using System; 
+
 
 public class Plato
 {
