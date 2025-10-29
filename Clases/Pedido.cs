@@ -8,10 +8,10 @@ public class Pedido
     private static int contador = 1; 
     private int idPedido;
     private string cedulaCliente;
-    private ListaEnlazada<PlatoPedido> platos; // Lista de platos dentro del pedido
+    private ListaEnlazada<PlatoPedido> platos; 
     private decimal total;
     private DateTime fechaHora;
-    private string estado; // "PENDIENTE" o "DESPACHADO"
+    private string estado; 
 
     public Pedido(string cedulaCliente)
     {
@@ -54,7 +54,6 @@ public class Pedido
         get { return this.platos; }
     }
 
-    //  Agregar un plato al pedido
     public void AgregarPlato(PlatoPedido plato)
     {
         if (plato.Cantidad <= 0)
@@ -67,7 +66,7 @@ public class Pedido
         Console.WriteLine("Plato agregado al pedido.");
     }
 
-    //  Calcular el total del pedido
+    
     public void CalcularTotal()
     {
         decimal suma = 0;
@@ -82,7 +81,6 @@ public class Pedido
         this.total = suma;
     }
 
-    // Mostrar información del pedido
     public void MostrarInformacion()
     {
         Console.WriteLine("PEDIDO #" + idPedido);
