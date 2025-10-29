@@ -15,7 +15,7 @@ public class Restaurante
     private ListaEnlazada<Cliente> clientes;
     private ListaEnlazada<Plato> platos;
     private Cola<Pedido> colaPedidos;
-    private Pila<Pedido> historialPedidos; // para ver los últimos despachados
+    private Pila<Pedido> historialPedidos; 
 
     public Restaurante(string nit, string nombre, string dueno, string celular, string direccion)
     {
@@ -80,7 +80,6 @@ public class Restaurante
         get { return this.historialPedidos; }
     }
 
-    // Métodos funcionales del restaurante
     public void MostrarInformacion()
     {
         Console.WriteLine("RESTAURANTE");
@@ -91,8 +90,6 @@ public class Restaurante
         Console.WriteLine("Dirección: " + direccion);
         Console.WriteLine("----------------------------------");
     }
-
-    //  Agregar cliente 
     public void AgregarCliente(Cliente cliente)
     {
         Nodo<Cliente>? actual = clientes.Cabeza;
@@ -111,7 +108,6 @@ public class Restaurante
         Console.WriteLine("Cliente agregado correctamente.");
     }
 
-    // Agregar plato al menú 
     public void AgregarPlato(Plato plato)
     {
         Nodo<Plato>? actual = platos.Cabeza;
@@ -130,14 +126,12 @@ public class Restaurante
         Console.WriteLine("Plato agregado correctamente al menú.");
     }
 
-    // Crear pedido
     public void CrearPedido(Pedido pedido)
     {
         colaPedidos.Agregar(pedido);
         Console.WriteLine("Pedido agregado a la cola de pedidos pendientes.");
     }
 
-    // Despachar pedido
     public void DespacharPedido()
     {
         if (colaPedidos.EstaVacia())
@@ -154,7 +148,6 @@ public class Restaurante
         Console.WriteLine(" Pedido #" + pedido.IdPedido + " despachado correctamente.");
     }
 
-    // Mostrar clientes
     public void ListarClientes()
     {
         if (clientes.Cabeza == null)
@@ -171,7 +164,6 @@ public class Restaurante
         }
     }
 
-    // Mostrar menú (platos)
     public void ListarPlatos()
     {
         if (platos.Cabeza == null)
@@ -188,7 +180,6 @@ public class Restaurante
         }
     }
 
-    // Mostrar pedidos pendientes
     public void MostrarPedidosPendientes()
     {
         if (colaPedidos.EstaVacia())
@@ -201,7 +192,7 @@ public class Restaurante
         colaPedidos.Imprimir();
     }
 
-    // Mostrar historial de pedidos
+
     public void MostrarHistorial()
     {
         Console.WriteLine("Últimos pedidos despachados:");
