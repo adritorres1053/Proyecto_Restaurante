@@ -1,14 +1,16 @@
 ﻿﻿using Proyecto_Restaurante;
 using Listas;
+using System;
 
 class Program
 {
-    static void Main()
-    {
-        Restaurante restaurante = null;
-        int opcion;
+    static Restaurante restaurante = null;
 
-        do
+    static void Main(string[] args)
+    {
+        bool salir = false;
+
+        while (!salir)
         {
             Console.Clear();
             Console.WriteLine("=========================================");
@@ -23,79 +25,62 @@ class Program
             Console.WriteLine("7. Listar platos del menú");
             Console.WriteLine("8. Mostrar historial de pedidos");
             Console.WriteLine("9. Salir");
-            Console.Write("Seleccione una opción: ");
+            Console.Write("Seleccione la opción deseada: ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcion))
-            {
-                Console.WriteLine("Opción inválida. Presione una tecla para continuar...");
-                Console.ReadKey();
-                continue;
-            }
-
-            Console.Clear();
+            string opcion = Console.ReadLine();
 
             switch (opcion)
             {
-                case 1:
-                    restaurante = CrearRestaurante();
+                case "1":
+                    CrearRestaurante();
                     break;
 
-                case 2:
-                    if (VerificarRestaurante(restaurante))
-                        AgregarCliente(restaurante);
+                case "2":
+                   AgregarCliente();
                     break;
 
-                case 3:
-                    if (VerificarRestaurante(restaurante))
-                        AgregarPlato(restaurante);
+                case "3":
+                   AgregarPlato();
                     break;
 
-                case 4:
-                    if (VerificarRestaurante(restaurante))
-                        CrearPedido(restaurante);
+                case "4":
+                    CrearPedido();
                     break;
 
-                case 5:
-                    if (VerificarRestaurante(restaurante))
-                        restaurante.DespacharPedido();
+                case "5":
+                    restaurante.DespacharPedido();
                     break;
 
-                case 6:
-                    if (VerificarRestaurante(restaurante))
-                        restaurante.ListarClientes();
+                case "6":
+                    restaurante.ListarClientes();
                     break;
 
-                case 7:
-                    if (VerificarRestaurante(restaurante))
-                        restaurante.ListarPlatos();
+                case "7":
+                    restaurante.ListarPlatos();
                     break;
 
-                case 8:
-                    if (VerificarRestaurante(restaurante))
-                        restaurante.MostrarHistorial();
+                case "8":
+                    restaurante.MostrarHistorial();
                     break;
 
-                case 9:
+                case "9":
+                    salir = true;
                     Console.WriteLine("Saliendo del sistema. ¡Hasta pronto!");
                     break;
 
                 default:
-                    Console.WriteLine(" Opción no válida.");
+                    Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
                     break;
             }
 
-            Console.WriteLine("\nPresione una tecla para continuar...");
+            Console.WriteLine(" Presione cualquier tecla para continuar...");
             Console.ReadKey();
-
-        } while (opcion != 9);
+        }
     }
 
-    // MÉTODOS AUXILIARES DEL MENÚ
-    
-
-    static Restaurante CrearRestaurante()
+    private static void CrearRestaurante()
     {
-        Console.WriteLine("CREAR RESTAURANTE");
+        Console.WriteLine("=== CREAR RESTAURANTE ===");
         Console.Write("NIT: ");
         string nit = Console.ReadLine();
 
@@ -111,14 +96,13 @@ class Program
         Console.Write("Dirección: ");
         string direccion = Console.ReadLine();
 
-        Restaurante nuevo = new Restaurante(nit, nombre, dueno, celular, direccion);
-        Console.WriteLine("Restaurante creado correctamente.");
-        return nuevo;
+        restaurante = new Restaurante(nit, nombre, dueno, celular, direccion);
+        Console.WriteLine(" Restaurante creado correctamente.");
     }
 
-    static void AgregarCliente(Restaurante restaurante)
+    private static void AgregarCliente()
     {
-        Console.WriteLine(" AGREGAR CLIENTE");
+        Console.WriteLine("=== AGREGAR CLIENTE ===");
         Console.Write("Cédula: ");
         string cedula = Console.ReadLine();
 
@@ -136,11 +120,12 @@ class Program
 
         Cliente nuevo = new Cliente(cedula, nombre, celular, direccion, email);
         restaurante.AgregarCliente(nuevo);
+        Console.WriteLine(" Cliente agregado con éxito.");
     }
 
-    static void AgregarPlato(Restaurante restaurante)
+    private static void AgregarPlato()
     {
-        Console.WriteLine("AGREGAR PLATO AL MENÚ");
+        Console.WriteLine("=== AGREGAR PLATO AL MENÚ ===");
         Console.Write("Código del plato: ");
         string codigo = Console.ReadLine();
 
@@ -155,11 +140,12 @@ class Program
 
         Plato nuevo = new Plato(codigo, nombre, descripcion, precio);
         restaurante.AgregarPlato(nuevo);
+        Console.WriteLine("Plato agregado correctamente.");
     }
 
-    static void CrearPedido(Restaurante restaurante)
+    private static void CrearPedido()
     {
-        Console.WriteLine("CREAR PEDIDO");
+        Console.WriteLine("=== CREAR PEDIDO ===");
         Console.Write("Ingrese la cédula del cliente: ");
         string cedula = Console.ReadLine();
 
@@ -171,7 +157,6 @@ class Program
             Console.Write("Código del plato: ");
             string codigo = Console.ReadLine();
 
-            // 🔹 Reemplazo del método Buscar
             Plato platoEncontrado = null;
             Nodo<Plato> nodoPlato = restaurante.Platos.Cabeza;
 
@@ -205,13 +190,14 @@ class Program
 
         nuevoPedido.CalcularTotal();
         restaurante.CrearPedido(nuevoPedido);
+        Console.WriteLine(" Pedido creado exitosamente.");
     }
 
-    static bool VerificarRestaurante(Restaurante restaurante)
+    private static bool VerificarRestaurante()
     {
         if (restaurante == null)
         {
-            Console.WriteLine("Primero debe crear un restaurante.");
+            Console.WriteLine("Primero debe crear un restaurante antes de continuar.");
             return false;
         }
         return true;
