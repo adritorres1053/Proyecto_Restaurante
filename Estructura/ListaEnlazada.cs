@@ -117,19 +117,21 @@ public class ListaEnlazada<T>
     }
 
     public int ContarElementos()
-    {
-        int contador = 0;
-        if (cabeza != null)
-            contador = 1;
+{
+    int contador = 0;
 
-        Nodo<T> actual = cabeza;
-        while (actual.Siguiente != null)
-        {
-            actual = actual.Siguiente;
-            contador++;
-        }
-        return contador;
+    if (Cabeza == null)
+        return 0;
+
+    Nodo<T> actual = Cabeza;
+    while (actual != null)
+    {
+        contador++;
+        actual = actual.Siguiente;
     }
+    return contador;
+}
+
 
     public void InsertarEnPosicion(T valor, int posicion)
     {

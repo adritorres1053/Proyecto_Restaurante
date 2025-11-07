@@ -78,4 +78,16 @@ public class Cola<T>
         }
         Console.WriteLine();
     }
+        public int ContarElementos()
+    {
+    int contador = 0;
+    Nodo<T> actual = cabeza;
+    while (actual != null)
+    {
+        contador++;
+        actual = actual.Siguiente;
+        }
+    return contador;
+    }
+
 }
