@@ -45,7 +45,9 @@ void MostrarMenuPrincipal()
     Console.WriteLine("=====================================");
     Console.WriteLine("   SISTEMA DE GESTIÓN DE RESTAURANTE ");
     Console.WriteLine("=====================================");
-    Console.WriteLine($"Restaurante actual: {(restauranteActual == null ? "(ninguno seleccionado)" : restauranteActual.Nombre)}");
+    Console.WriteLine("Accediendo al sistema principal...");
+    Console.WriteLine();
+    Console.WriteLine("Por favor, seleccione una de las siguientes opciones:");
     Console.WriteLine("1) Restaurantes");
     Console.WriteLine("2) Clientes");
     Console.WriteLine("3) Platos");
